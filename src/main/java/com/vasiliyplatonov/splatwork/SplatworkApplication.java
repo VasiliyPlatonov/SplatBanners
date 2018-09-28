@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SplatworkApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SplatworkApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SplatworkApplication.class, args);
+    }
 }
