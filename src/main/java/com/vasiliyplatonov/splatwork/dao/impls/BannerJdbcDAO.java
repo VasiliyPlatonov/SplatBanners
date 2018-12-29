@@ -2,6 +2,7 @@ package com.vasiliyplatonov.splatwork.dao.impls;
 
 import com.vasiliyplatonov.splatwork.dao.interfaces.BannerDAO;
 import com.vasiliyplatonov.splatwork.domain.Banner;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BatchUpdateUtils;
@@ -33,7 +34,7 @@ public class BannerJdbcDAO implements BannerDAO<Banner, Integer> {
     }
 
     @Override
-    public Banner save(Banner banner) {
+    public Banner save(@NonNull Banner banner) {
 
         SqlParameterSource params = new BeanPropertySqlParameterSource(banner);
         Number newId = bannerInsert.executeAndReturnKey(params);
@@ -43,13 +44,13 @@ public class BannerJdbcDAO implements BannerDAO<Banner, Integer> {
     }
 
     @Override
-    public int save(List<Banner> banners) {
+    public int save(@NonNull List<Banner> banners) {
         SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(banners.toArray());
         return bannerInsert.executeBatch(batch).length;
     }
 
     @Override
-    public Banner findOne(Integer id) {
+    public Banner findOne(@NonNull Integer id) {
         String sql = "SELECT id, height, width, imgSrc, langId, targetUrl FROM banner WHERE id=:banner_id";
         MapSqlParameterSource params = new MapSqlParameterSource("banner_id", id);
 
@@ -57,11 +58,7 @@ public class BannerJdbcDAO implements BannerDAO<Banner, Integer> {
     }
 
     @Override
-    public boolean exists(Integer id) {
-        if (id == null) {
-            throw new IllegalArgumentException();
-        }
-
+    public boolean exists(@NonNull Integer id) {
         String sql = "SELECT count(id) FROM banner WHERE id=:banner_id";
         MapSqlParameterSource params = new MapSqlParameterSource("banner_id", id);
         Integer count = jdbcTemplate.queryForObject(sql, params, Integer.class);
@@ -78,7 +75,7 @@ public class BannerJdbcDAO implements BannerDAO<Banner, Integer> {
     }
 
     @Override
-    public List<Banner> findAll(List<Integer> ids) {
+    public List<Banner> findAll(@NonNull List<Integer> ids) {
         String sql = "SELECT id, height, width, imgSrc, langId, targetUrl FROM banner WHERE id IN (:banner_ids)";
 
         MapSqlParameterSource params = new MapSqlParameterSource("banner_ids", ids);
@@ -97,7 +94,7 @@ public class BannerJdbcDAO implements BannerDAO<Banner, Integer> {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(@NonNull Integer id) {
         String sql = "DELETE FROM banner WHERE id = :id";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
@@ -107,12 +104,12 @@ public class BannerJdbcDAO implements BannerDAO<Banner, Integer> {
     }
 
     @Override
-    public void delete(Banner banner) {
+    public void delete(@NonNull Banner banner) {
         delete(banner.getId());
     }
 
     @Override
-    public void delete(List<? extends Banner> banners) {
+    public void delete(@NonNull List<? extends Banner> banners) {
         List<Integer> bannerIds = new ArrayList<>();
         banners.forEach(banner -> bannerIds.add(banner.getId()));
 
