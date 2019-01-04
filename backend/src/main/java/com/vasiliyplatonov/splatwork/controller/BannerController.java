@@ -3,22 +3,36 @@ package com.vasiliyplatonov.splatwork.controller;
 import com.vasiliyplatonov.splatwork.dao.impls.BannerJdbcDAO;
 import com.vasiliyplatonov.splatwork.domain.Banner;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+
+import java.util.List;
+
+@RestController
+@RequestMapping("banner")
 public class BannerController {
 
+    /*TODO: Explore service level, approach to work with it  */
     @Autowired
     private BannerJdbcDAO bannerDAO;
 
-    @GetMapping("/banners/{id}")
-    public ModelAndView getBanner(@PathVariable Integer id, ModelAndView modelAndView) {
-        Banner banner = bannerDAO.findOne(id);
-        modelAndView.setViewName("banners");
-        modelAndView.addObject("banner", banner);
-        return modelAndView;
+    @GetMapping
+    public List<Banner> getAllBanners() {
+        return bannerDAO.findAll();
+    }
+
+    @GetMapping("{id}")
+    public Banner getBanner(@PathVariable("id") Integer id) {
+        return bannerDAO.findOne(id);
+    }
+
+    @PostMapping
+    public Banner createBanner(@RequestBody Banner banner) {
+        return bannerDAO.save(banner);
+    }
+
+    @DeleteMapping("{id}")
+    public void deleteBanner(@PathVariable("id") Integer id) {
+        bannerDAO.delete(id);
     }
 }
