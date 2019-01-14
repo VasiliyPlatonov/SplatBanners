@@ -1,20 +1,39 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app style="background-color: #eee !important;">
+    <drawer></drawer>
+    <toolbar></toolbar>
+    <v-content>
+      <router-view></router-view>
+    </v-content>
+  </v-app>
 </template>
 
-<style lang="less">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<script>
+  import Drawer from "./components/Drawer.vue"
+  import Toolbar from "./components/Toolbar.vue"
+
+  export default {
+    data() {
+      return {
+        drawerImageSrc: './img/sidebar-2.jpg',
+        responsive: false,
+        logo: './img/logo.png',
+        links: [
+          {title: 'Login', icon: 'lock', url: '/login'},
+        ]
+      }
+    },
+    components: {
+      drawer: Drawer,
+      toolbar: Toolbar
+    },
+  }
+</script>
+
+<style scoped>
+
+
+  .pointer {
+    cursor: pointer;
+  }
 </style>
