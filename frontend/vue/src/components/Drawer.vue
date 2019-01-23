@@ -5,7 +5,7 @@
     fixed
     app
   >
-    <v-list dense>
+    <v-list>
       <v-list-tile
         v-for="link in links"
         :key="link.title"
@@ -29,6 +29,7 @@
     data() {
       return {
         links: [
+          {title: 'Banners', icon: 'view_comfy', url: '/banners', active: false},
           {title: 'Login', icon: 'lock', url: '/login', active: false},
         ]
       }

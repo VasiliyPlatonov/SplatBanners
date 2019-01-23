@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import banners from './banners'
+import shared from './shared'
 
 Vue.use(Vuex)
 
@@ -29,6 +31,8 @@ const drawer = {
 
 export default new Vuex.Store({
   modules: {
-    drawer
+    shared,
+    drawer,
+    banners
   }
 })

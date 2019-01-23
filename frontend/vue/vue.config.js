@@ -10,7 +10,7 @@ module.exports = {
     //     ws: true,
     //     changeOrigin: true
     //   }
-    proxy: 'http://localhost:8080'
+    proxy: 'http://localhost:8088'
 
   },
   // Change build paths to make them Maven compatible
