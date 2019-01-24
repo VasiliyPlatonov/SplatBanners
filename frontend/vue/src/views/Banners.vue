@@ -1,9 +1,12 @@
 <template>
   <div>
     <v-container>
-      <v-layout>
-        <v-flex xs12>
+      <v-layout row>
+        <v-flex xs6>
           <h1 class="text--secondary mb-3">Banners</h1>
+        </v-flex>
+        <v-flex xs6>
+          <banner-tools></banner-tools>
         </v-flex>
       </v-layout>
     </v-container>
@@ -14,15 +17,15 @@
                 v-for="banner in banners"
                 :key="banner.id"
         >
-          <banner :banner="banner"></banner>
+          <banner-card :banner="banner"></banner-card>
         </v-flex>
       </v-layout>
     </v-container>
   </div>
 </template>
 <script>
-  import banner from '../components/BannerCard.vue'
-
+  import BannerCard from '../components/BannerCard.vue'
+  import BannerTools from '../components/BannerTools.vue'
   export default {
     computed: {
       banners: {
@@ -35,7 +38,8 @@
       this.banners = this.$store.dispatch('setBanners')
     },
     components: {
-      banner
+      bannerCard: BannerCard,
+      bannerTools: BannerTools
     }
   }
 </script>

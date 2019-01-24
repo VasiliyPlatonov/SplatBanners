@@ -2,16 +2,26 @@ import axios from 'axios'
 
 export default {
   state: {
-    banners: null
+    banners: null,
+    isTableView: false
   },
   mutations: {
     setBanners(state, payload) {
       state.banners = payload
+    },
+    setTableView(state, payload) {
+      state.isTableView = payload
+    },
+    toggleTableView(state) {
+      state.isTableView = !state.isTableView
     }
   },
   getters: {
     getBanners(state) {
       return state.banners
+    },
+    getTableView(state) {
+      return state.isTableView
     }
   },
   actions: {
@@ -30,6 +40,12 @@ export default {
           commit('setError', error.message)
           throw error
         })
+    },
+    setTableView({commit}, val) {
+      commit('setTableView', val)
+    },
+    toggleTableView({commit}) {
+      commit('toggleTableView')
     }
   }
 }
