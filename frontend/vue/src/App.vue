@@ -9,8 +9,8 @@
 </template>
 
 <script>
-  import Drawer from "./components/Drawer.vue"
-  import Toolbar from "./components/Toolbar.vue"
+  import Drawer from "./components/core/Drawer.vue"
+  import Toolbar from "./components/core/Toolbar.vue"
 
   export default {
     data() {
