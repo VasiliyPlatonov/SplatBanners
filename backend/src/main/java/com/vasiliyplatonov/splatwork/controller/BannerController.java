@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("banner")
+@RequestMapping("banner") /*todo: Change "banner" to "banners". That will be more correctly in according to REST approach*/
 public class BannerController {
 
     /*TODO: Explore service level, approach to work with it  */

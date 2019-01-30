@@ -1,6 +1,7 @@
 package com.vasiliyplatonov.splatwork.dao;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -93,4 +94,13 @@ public interface GeneralDAO<T, ID extends Serializable> {
      * @throws IllegalArgumentException in case the given {@link List} is {@literal null}.
      */
     void delete(List<? extends T> entities);
+
+    /**
+     * Updates the entities with the given id
+     *
+     * @param entity  must not be {@literal null}
+     * @throws IllegalArgumentException in case the given entity is {@literal null}.
+     *
+     * */
+    void update(T entity) throws Exception;
 }

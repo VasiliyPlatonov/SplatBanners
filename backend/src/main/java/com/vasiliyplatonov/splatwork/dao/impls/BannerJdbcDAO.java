@@ -1,18 +1,16 @@
 package com.vasiliyplatonov.splatwork.dao.impls;
 
+import com.vasiliyplatonov.splatwork.dao.exceptions.BannerJdbcDAOException;
 import com.vasiliyplatonov.splatwork.dao.interfaces.BannerDAO;
 import com.vasiliyplatonov.splatwork.domain.Banner;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
-import org.springframework.jdbc.core.BatchUpdateUtils;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.*;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -35,7 +33,6 @@ public class BannerJdbcDAO implements BannerDAO<Banner, Integer> {
 
     @Override
     public Banner save(@NonNull Banner banner) {
-
         SqlParameterSource params = new BeanPropertySqlParameterSource(banner);
         Number newId = bannerInsert.executeAndReturnKey(params);
         banner.setId(newId.intValue());
@@ -83,7 +80,6 @@ public class BannerJdbcDAO implements BannerDAO<Banner, Integer> {
     }
 
     @Override
-
     public int count() {
         String sql = "SELECT count(*) FROM banner";
         Integer result = jdbcTemplate.getJdbcOperations().queryForObject(sql, Integer.class);
@@ -117,6 +113,24 @@ public class BannerJdbcDAO implements BannerDAO<Banner, Integer> {
 
         MapSqlParameterSource params = new MapSqlParameterSource("banner_ids", bannerIds);
         jdbcTemplate.query(sql, params, new BannerMapper());
+    }
+
+    @Override
+    public void update(@NonNull Banner banner) throws BannerJdbcDAOException {
+        String sql =
+                "UPDATE banner " +
+                        "SET width = :width, " +
+                        "height = :height, " +
+                        "imgSrc = :imgSrc, " +
+                        "targetUrl = :targetUrl, " +
+                        "langId = :langId " +
+                        "WHERE id = :id";
+
+
+        SqlParameterSource params = new BeanPropertySqlParameterSource(banner);
+        if (jdbcTemplate.update(sql, params) == 0)
+            throw new BannerJdbcDAOException("There is an exception while trying to update the banner." +
+                    " Expected the number of rows affected is more then 1 but actual is 0.");
     }
 
     private static final class BannerMapper implements RowMapper<Banner> {
