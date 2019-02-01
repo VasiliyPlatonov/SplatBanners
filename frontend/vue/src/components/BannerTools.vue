@@ -20,7 +20,7 @@
         return this.$store.getters.getTableView
       },
       viewIcon() {
-        if (!this.tableView) {
+        if (this.tableView) {
           return 'view_comfy'
         }
         else return 'view_list'
