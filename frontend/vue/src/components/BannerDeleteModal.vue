@@ -17,7 +17,6 @@
         <v-spacer></v-spacer>
 
         <v-btn
-
           flat="flat"
           @click="deleteModal = false"
         >
