@@ -30,6 +30,9 @@ export default {
     deleteBanner(state, banner) {
       const index = state.banners.indexOf(banner)
       state.banners.splice(index, 1)
+    },
+    createBanner(state, banner) {
+      state.banners.push(banner)
     }
   },
   getters: {
@@ -60,6 +63,7 @@ export default {
     setTableView({commit}, val) {
       commit('setTableView', val)
     },
+    /* todo: refactor this. move it to another place */
     toggleTableView({commit}) {
       commit('toggleTableView')
     },
@@ -93,6 +97,22 @@ export default {
       axios.delete('/banner/' + banner.id)
         .then(() => {
           commit('deleteBanner', banner)
+          commit('setLoading', false)
+        })
+        .catch(error => {
+          commit('setLoading', false)
+          commit('setError', error.message)
+          throw error
+        })
+    },
+    createBanner({commit}, banner) {
+      commit('clearError')
+      commit('setLoading', true)
+
+      axios.post('/banner/', banner)
+        .then(response => {
+          const banner = response.data
+          commit('createBanner', banner)
           commit('setLoading', false)
         })
         .catch(error => {
